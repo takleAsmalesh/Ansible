@@ -1,0 +1,38 @@
+- hosts: webservers
+  become: yes
+  tasks:
+    - name: Ensure Apache is installed
+      yum:
+        name: httpd
+        state: present
+
+    - name: Ensure Apache is running and enabled
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Create a basic index.html
+      copy:
+        dest: /var/www/html/index.html
+        content: "<h1>Hello from server {{ inventory_hostname }}</h1>"
+
+    - name: Open HTTP port in firewall
+      firewalld:
+        port: 80/tcp
+        permanent: yes
+        state: enabled
+      notify: restart firewalld
+
+    - name: Import a key from a url
+      rpm_key:
+        state: present
+        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
+    - name: #Run additional commands on both web1 and web2
+      shell: sudo yum install -y httpd
+
+  handlers:
+    - name: restart firewalld
+      service:
+        name: firewalld
+        state: restarted

@@ -1,0 +1,27 @@
+- name: Configure Nginx load balancer
+  hosts: loadbalancer
+  become: yes
+  tasks:
+    - name: Install Docker (if not already installed)
+      yum:
+        name: docker
+        state: present
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Pull Nginx Docker image
+      command: docker pull nginx:latest
+
+    - name: Run Nginx container with custom configuration
+      command: >
+        docker run -d --name nginx-lb -p 80:80 --network=private_network
+        -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro
+        nginx:latest
+      args:
+        chdir: /vagrant
+
+    
