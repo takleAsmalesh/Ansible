@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent agent1
 
     environment {
         VAGRANT_HOME = "${env.WORKSPACE}/.vagrant" 
