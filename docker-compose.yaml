@@ -1,0 +1,19 @@
+---
+version: "3.8"
+services:
+  jenkins:
+    hostname: jenkins
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JENKINS_IMAGE: "${JENKINS_IMAGE:-docker.io/jenkins/jenkins}"
+        JENKINS_TAG: "${JENKINS_TAG:-lts}"          # see tags here: https://hub.docker.com/r/jenkins/jenkins/tags
+        HOST_DOCKER_GID: "${HOST_DOCKER_GID:?err}"  # check *your* docker group id with: `getent group docker`
+    ports:
+    - "${JENKINS_PORT:-8080}:8080"
+    volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "jenkins_home:/var/jenkins_home"
+volumes:
+  jenkins_home:
