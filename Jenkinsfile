@@ -11,8 +11,8 @@ pipeline {
         stage('Launch Environment') {
             steps {
                 sh '''
-                    sudo apt-get update
-                    sudo apt-get install vagrant -y
+                    apt-get update
+                    apt-get install -y vagrant
                     vagrant up
                 '''
             }
