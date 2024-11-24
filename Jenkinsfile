@@ -20,9 +20,9 @@ pipeline {
                   sudo apt-add-repository "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib"
                   wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
 
-                  # Install VirtualBox 6.1
+                  # Install VirtualBox 7.0
                   sudo apt-get update
-                  sudo apt-get install -y virtualbox-6.1
+                  sudo apt-get install -y virtualbox-7.0
 
                   # Load VirtualBox kernel module
                   sudo modprobe vboxdrv
