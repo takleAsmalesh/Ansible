@@ -13,7 +13,15 @@ pipeline {
                 sh '''
                   sudo apt-get update
                   sleep 10
-                  sudo apt-get install -y vagrant virtualbox
+
+                  sudo sh -c 'echo "deb https://download.virtualbox.org/virtualbox/debian bookworm contrib" > /etc/apt/sources.list.d/virtualbox.list'
+                  wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo tee /etc/apt/trusted.gpg.d/virtualbox.asc
+                  
+                  # Update apt again after adding VirtualBox repo
+                  sudo apt-get update
+                  sleep 10
+
+                  sudo apt-get install -y vagrant virtualbox-7.1
                   sleep 10
                   sudo vagrant up
                 '''
