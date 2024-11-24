@@ -13,9 +13,9 @@ pipeline {
                 sh '''
                   sudo apt-get update
                   sleep 10
-                  sudo apt-get install -y vagrant 
+                  sudo apt-get install -y vagrant
                   sleep 10
-                  sudo vagrant up 
+                  sudo vagrant up --provider=virtualbox
                 '''
             }
         }
