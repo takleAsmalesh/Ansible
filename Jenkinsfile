@@ -11,7 +11,7 @@ pipeline {
         stage('Launch Environment') {
             steps {
                 sh '''
-                    curl -sL https://deb.nodesource.com/setup_10.x  | sudo bash -
+                    curl -sL https://deb.nodesource.com/setup_10.x  | bash -
                     apt-get update
                     apt-get install -y vagrant
                     vagrant up
