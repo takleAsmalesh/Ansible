@@ -21,7 +21,7 @@ pipeline {
                   sudo apt-get update
                   sleep 10
 
-                  sudo apt-get install -y vagrant virtualbox
+                  sudo apt-get install -y vagrant virtualbox-7.0
                   sleep 10
                   sudo vagrant up --provider=virtualbox
                 '''
