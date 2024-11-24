@@ -4,11 +4,10 @@ pipeline {
     stages {
         stage('Obtain the Code') {
             steps {
-                // Get some code from a GitHub repository
-              git branch: 'main', url: 'https://github.com/takleAsmalesh/Ansible.git'                
+                git branch: 'main', url: 'https://github.com/takleAsmalesh/Ansible.git'
             }
         }
-        stage('Launch Environment') {
+        stage('Install VirtualBox and Vagrant') {
             steps {
                 sh '''
                   # Remove existing VirtualBox installations
@@ -17,33 +16,43 @@ pipeline {
                   # Add VirtualBox repository
                   sudo apt-get update
                   sudo apt-get install -y software-properties-common dkms
-                  sudo apt-add-repository "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib"
+                  sudo apt-add-repository -y "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib"
                   wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+
+                  # Install Linux headers for kernel module building
+                  sudo apt-get install -y linux-headers-$(uname -r)
 
                   # Install VirtualBox 7.0
                   sudo apt-get update
                   sudo apt-get install -y virtualbox-7.0
 
-                  # Install latest Vagrant
-                  wget https://releases.hashicorp.com/vagrant/2.3.6/vagrant_2.3.4_amd64.deb
-                  sudo dpkg -i vagrant_2.3.4_amd64.deb
+                  # Rebuild VirtualBox kernel modules
+                  sudo /sbin/vboxconfig || true
 
+                  # Install the latest Vagrant
+                  wget https://releases.hashicorp.com/vagrant/2.3.6/vagrant_2.3.6_amd64.deb
+                  sudo dpkg -i vagrant_2.3.6_amd64.deb
 
-                  vagrant plugin uninstall vagrant-libvirt || true
-
+                  # Verify installations
+                  vboxmanage --version || exit 1
+                  vagrant --version || exit 1
+                '''
+            }
+        }
+        stage('Launch Environment') {
+            steps {
+                sh '''
+                  # Start the Vagrant environment with VirtualBox
                   sudo vagrant up --provider=virtualbox
                 '''
-                // sh '''
-                //   sudo apt-get update
-                //   sudo apt-get install -y vagrant
-                //   sudo vagrant up
-                // '''
             }
         }
         stage('Perform Tests') {
             steps {
-
-              sh "curl -I http://192.168.56.12"
+                sh '''
+                  # Perform a simple HTTP test
+                  curl -I http://192.168.56.12
+                '''
             }
         }
     }
