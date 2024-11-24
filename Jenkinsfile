@@ -23,7 +23,7 @@ pipeline {
 
                   sudo apt-get install -y vagrant virtualbox-7.1
                   sleep 10
-                  sudo vagrant up
+                  sudo vagrant up --provider=virtualbox
                 '''
             }
         }
