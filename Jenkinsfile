@@ -13,6 +13,7 @@ pipeline {
                 sh '''
                   sudo apt-get update
                   sudo apt-get install -y vagrant
+                  vagrant plugin uninstall vagrant-libvirt || true
                   sudo vagrant up
                 '''
             }
