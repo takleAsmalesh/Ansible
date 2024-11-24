@@ -13,7 +13,7 @@ pipeline {
                 sh '''
                   sudo apt-get update
                   sleep 10
-                  sudo apt-get install -y vagrant
+                  sudo apt-get install -y vagrant virtualbox
                   sleep 10
                   sudo vagrant up
                 '''
