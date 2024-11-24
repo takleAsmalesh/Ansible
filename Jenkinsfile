@@ -12,12 +12,6 @@ pipeline {
             steps {
                 sh '''
                   sudo apt-get update
-                  sudo apt-get install -y gnupg
-                  wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo gpg --dearmor -o /usr/share/keyrings/oracle-virtualbox.gpg
-                  sudo apt-get update
-                  sudo apt-get install -y virtualbox-7.0
-                  sudo apt-get install vagrant
-                  sudo apt-get update
                   vagrant up --provider=virtualbox
                 '''
             }
