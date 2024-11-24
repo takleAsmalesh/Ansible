@@ -12,7 +12,8 @@ pipeline {
             steps {
                 sh '''
                   sudo apt-get update
-                  vagrant up --provider=virtualbox
+                  sudo apt-get install -y vagrant
+                  sudo vagrant up
                 '''
             }
         }
@@ -53,5 +54,3 @@ pipeline {
 //         }
 //     }
 // }
-
-                // echo "deb [signed-by=/usr/share/keyrings/oracle-virtualbox.gpg] https://download.virtualbox.org/virtualbox/debian bookworm contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
