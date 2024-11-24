@@ -34,6 +34,8 @@ pipeline {
 
                   # Verify Vagrant installation
                   vagrant --version
+
+                  sudo vagrant up
                 '''
                 // sh '''
                 //   sudo apt-get update
