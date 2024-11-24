@@ -11,29 +11,29 @@ pipeline {
         stage('Launch Environment') {
             steps {
                 sh '''
-                  # Update package lists
-                  sudo apt-get update
-                  
-                  # Install dependencies for VirtualBox
-                  sudo apt-get install -y software-properties-common dkms
+                  # Remove existing VirtualBox installations
+                  sudo apt-get remove --purge -y virtualbox*
 
                   # Add VirtualBox repository
-                  sudo apt-add-repository "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib"
-                  wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
-                  wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
-                  
-                  # Install VirtualBox
                   sudo apt-get update
-                  sudo apt-get install -y virtualbox-7.0
+                  sudo apt-get install -y software-properties-common dkms
+                  sudo apt-add-repository "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib"
+                  wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+
+                  # Install VirtualBox 6.1
+                  sudo apt-get update
+                  sudo apt-get install -y virtualbox-6.1
+
+                  # Load VirtualBox kernel module
+                  sudo modprobe vboxdrv
 
                   # Verify VirtualBox installation
                   vboxmanage --version
 
-                  # Install Vagrant
-                  sudo apt-get install -y vagrant
+                  # Install latest Vagrant
+                  wget https://releases.hashicorp.com/vagrant/2.3.6/vagrant_2.3.6_amd64.deb
+                  sudo dpkg -i vagrant_2.3.6_amd64.deb
 
-                  # Verify Vagrant installation
-                  vagrant --version
 
                   vagrant plugin uninstall vagrant-libvirt || true
 
