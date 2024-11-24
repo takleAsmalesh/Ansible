@@ -12,7 +12,16 @@ pipeline {
             steps {
                 sh '''
                   sudo apt-get update
-                  sudo apt-get install -y virtualbox vagrant 
+                  sudo apt-get install -y gnupg
+                  wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo gpg --dearmor -o /usr/share/keyrings/oracle-virtualbox.gpg
+                '''
+                echo "deb [signed-by=/usr/share/keyrings/oracle-virtualbox.gpg] https://download.virtualbox.org/virtualbox/debian bookworm contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
+
+                sh '''
+                  sudo apt-get update
+                  sudo apt-get install -y virtualbox-7.0
+                  sudo apt-get install vagrant
+                  sudo apt-get update
                   vagrant up --provider=virtualbox
                 '''
             }
