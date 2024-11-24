@@ -15,6 +15,11 @@ pipeline {
                   sleep 10
                   sudo apt-get install -y vagrant
                   sleep 10
+                  sudo systemctl start libvirtd
+                  sudo systemctl enable libvirtd
+                  virsh uri
+                  sudo virsh uri qemu:///system
+                  sudo usermod -a -G libvirt your_username sudo newgrp libvirt 
                   sudo vagrant up
                 '''
             }
