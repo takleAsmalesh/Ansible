@@ -27,9 +27,6 @@ pipeline {
                   # Load VirtualBox kernel module
                   sudo modprobe vboxdrv
 
-                  # Verify VirtualBox installation
-                  vboxmanage --version
-
                   # Install latest Vagrant
                   wget https://releases.hashicorp.com/vagrant/2.3.6/vagrant_2.3.6_amd64.deb
                   sudo dpkg -i vagrant_2.3.6_amd64.deb
