@@ -27,7 +27,7 @@ pipeline {
                   sleep 10
 
                   # Install VirtualBox and Vagrant
-                  sudo apt-get install -y vagrant virtualbox
+                  sudo apt-get install -y vagrant virtualbox-7.1
                   sleep 10
 
                   # Start Vagrant environment with VirtualBox provider
