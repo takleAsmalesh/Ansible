@@ -35,7 +35,9 @@ pipeline {
                   # Verify Vagrant installation
                   vagrant --version
 
-                  sudo vagrant up
+                  vagrant plugin uninstall vagrant-libvirt || true
+
+                  sudo vagrant up --provider=virtualbox
                 '''
                 // sh '''
                 //   sudo apt-get update
