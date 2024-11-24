@@ -12,8 +12,8 @@ pipeline {
             steps {
                 sh '''
                   sudo apt-get update
-                  sudo apt-get install -y vagrant
-                  sudo vagrant up
+                  sudo apt-get install -y virtualbox vagrant 
+                  vagrant up --provider=virtualbox
                 '''
             }
         }
