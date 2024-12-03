@@ -18,8 +18,8 @@
 
     - name: Run Nginx container with custom configuration
       command: >
-        docker run -d --name nginx-lb -p 80:80 --network=private_network
-        -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro
+        docker run -d --name nginx-lb -p 80:80 \
+        -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro \
         nginx:latest
       args:
         chdir: /vagrant
